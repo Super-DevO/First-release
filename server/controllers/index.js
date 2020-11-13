@@ -53,6 +53,7 @@ module.exports.displayListSurvey = (req, res, next) => {
     //res.render('list', { title: 'List of Surveys' });
 }
 
+<<<<<<< HEAD
 module.exports.deleteSurvey = (req, res, next) => {
     let id = req.body.id;
     Survey.remove({_id: id}, (err) => {
@@ -67,6 +68,8 @@ module.exports.deleteSurvey = (req, res, next) => {
     });
 }
 
+=======
+>>>>>>> 62d71960c717ba84f71b6579d1177855f56fac0f
 module.exports.displayQuestionEntry = (req, res, next) => {
     let name = req.params.name;
     console.log("ID should be below");
