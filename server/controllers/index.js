@@ -53,6 +53,20 @@ module.exports.displayListSurvey = (req, res, next) => {
     //res.render('list', { title: 'List of Surveys' });
 }
 
+module.exports.deleteSurvey = (req, res, next) => {
+    let id = req.body.id;
+    Survey.remove({_id: id}, (err) => {
+        if(err)
+        {
+            res.end(err);
+        }
+        else
+        {
+            res.redirect('/list');
+        }
+    });
+}
+
 module.exports.displayQuestionEntry = (req, res, next) => {
     let name = req.params.name;
     console.log("ID should be below");

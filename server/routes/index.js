@@ -14,6 +14,8 @@ router.get('/instructions', indexController.displayInstruction);
 //for listing will do later
 router.get('/list',indexController.displayListSurvey);
 
+router.get('/list/:id', indexController.deleteSurvey);
+
 router.get('/TakeSurvey/:id', indexController.displaySurvey);
 
 router.get('/thanks', indexController.processSurvey);
