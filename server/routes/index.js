@@ -14,11 +14,8 @@ router.get('/instructions', indexController.displayInstruction);
 //for listing will do later
 router.get('/list',indexController.displayListSurvey);
 
-<<<<<<< HEAD
 router.get('/list/:id', indexController.deleteSurvey);
 
-=======
->>>>>>> 62d71960c717ba84f71b6579d1177855f56fac0f
 router.get('/TakeSurvey/:id', indexController.displaySurvey);
 
 router.get('/thanks', indexController.processSurvey);
