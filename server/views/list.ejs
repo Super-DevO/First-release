@@ -1,0 +1,55 @@
+<%- include partials/header.ejs %>
+
+<%- include partials/main_nav.ejs %>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-1 col-md-10"><br><br>
+          <h2>All the Surveys </h2>
+          <h3>page: <%= title %></h3><hr>
+          <!-- To fix we add the button  -->
+          <!-- meaning change the href  -->
+          <!-- get route name and go from there -->
+          <br>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th class="text-center col-2">Survey</th>
+                  <th class="text-center col-2">Author</th>
+                 <!-- <th class="text-center">Genre</th>
+                  I added some titles here also-->
+                  <th class="text-center col-2">Action</th>
+                 <th class="text-center col-2">Participate!</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <% for (let count = 0; count < surveys.length; count++) { %>
+                    <tr>
+                      <td><%= surveys[count].Name %></td>
+                      <td class="text-center col-2"><%= surveys[count].Author %></td>
+                      <td class="text-center col-2"><%= surveys[count].Author %></td>
+                      <td class="text-center col-2"><%= surveys[count].Author %></td>
+    
+                      <td class="text-center col-1">
+                        <a href="/TakeSurvey/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
+                        <i class="fas fa-arrow-alt-circle-down"></i> Take</a>
+                    </td>
+                    </tr> 
+                  <% } %>
+              </tbody>
+            </table>
+          </div>
+           <div class="col-md-offset-1 col-md-10 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<%- include partials/bottom_nav.ejs %>  
+
+<%- include partials/footer.ejs %>

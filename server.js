@@ -1,11 +1,30 @@
 #!/usr/bin/env node
-
 /**
- * Module dependencies.
- */
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var app = require('./app');
-var debug = require('debug')('super-dev-team:server');
+
+ * Module dependencies.
+ 
+
+
+let mongoose = require('./server/config/mongoose');
+let express = require('./server/config/express');
+let passport = require('./server/config/passport');
+
+let db = mongoose();
+app = express();
+passport = passport();
+
+
+module.exports = app;
+console.log('Server running at http://locahost:3000/');
+*/
+
+//var passport = require('./server/config/passport');
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+var app = require('./server/config/app');
+var debug = require('debug')('week-4:server');
 var http = require('http');
 
 /**
