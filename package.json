@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "week-4",
-=======
-  "name": "super-dev-app",
->>>>>>> 62d71960c717ba84f71b6579d1177855f56fac0f
   "version": "0.0.6",
   "private": true,
   "scripts": {
@@ -14,15 +10,10 @@
     "npm": "^6.0.0"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@fortawesome/fontawesome-free": "^5.14.0",
     "body-parser": "~1.8.0",
     "bootstrap": "^4.5.2",
     "compression": "~1.7.6",
-=======
-    "body-parser": "~1.8.0",
-    "bootstrap": "^4.5.2",
->>>>>>> 62d71960c717ba84f71b6579d1177855f56fac0f
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -31,14 +22,8 @@
     "express-session": "^1.7.6",
     "http-errors": "~1.6.3",
     "jquery": "^3.5.1",
-<<<<<<< HEAD
     "mongoose": "^5.10.2",
     "morgan": "~1.9.1",
-=======
-    "mongoose": "^5.10.13",
-    "morgan": "~1.9.1",
-    "nodemon": "^2.0.6",
->>>>>>> 62d71960c717ba84f71b6579d1177855f56fac0f
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1",
