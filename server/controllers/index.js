@@ -32,7 +32,7 @@ module.exports.displaySurvey = (req, res, next) => {
             res.render(err);
         } else {
             console.log(locSurv);
-            res.render('takeSurvey', { title: 'TakeSurvey', locSurv: locSurv });
+            res.render('TakeSurvey', { title: 'TakeSurvey', locSurv: locSurv });
         }
     })
 }
