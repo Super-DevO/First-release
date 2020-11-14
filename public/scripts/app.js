@@ -19,7 +19,7 @@
         }
         
         let option = document.getElementById('optA1');
-        console.log(option);
+        //console.log(option);
     }
 
     window.addEventListener("load", Start);
