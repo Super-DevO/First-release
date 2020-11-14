@@ -22,11 +22,7 @@ mongoDB.on('error', console.error.bind(console, 'Connection Error:'));
 mongoDB.once('open', ()=>{
   console.log('Connected to MongoDB...');
 });
-<<<<<<< HEAD
 
-=======
-//updated
->>>>>>> 62d71960c717ba84f71b6579d1177855f56fac0f
 let indexRouter = require('../routes/index');
 let usersRouter = require('../routes/users');
 let booksRouter = require('../routes/book');

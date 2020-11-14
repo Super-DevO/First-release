@@ -1,19 +1,15 @@
 {
-  "name":"final-project-229",
-  "version": "0.0.0",
+  "name": "week-4",
+  "version": "0.0.6",
   "private": true,
   "scripts": {
     "start": "node ./server.js"
-  },
-  "engines": {
-    "node": "^12.18.3",
-    "npm": "^6.0.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "body-parser": "~1.8.0",
     "bootstrap": "^4.5.2",
-    "compression": "1.7.6",
+    "compression": "~1.7.6",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -30,4 +26,3 @@
     "popper.js": "^1.16.1"
   }
 }
-

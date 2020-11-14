@@ -38,7 +38,6 @@ module.exports.displaySurvey = (req, res, next) => {
 }
 
 module.exports.displayListSurvey = (req, res, next) => {
-    //we need to get the surveys array form db
     Survey.find( (err, surveys) => {
         if (err) {
           return console.error(err);
