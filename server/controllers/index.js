@@ -19,6 +19,9 @@ module.exports.displayLogin = (req, res, next) => {
     res.render('login', { title: 'Login' });
 }
 
+module.exports.displaySLanding = (req, res, next) => {
+    res.render('slanding', { title: 'Your Survey'});
+}
 module.exports.displayInstruction = (req, res, next) => {
     res.render('instructions', {title: 'Instructions'});
 }

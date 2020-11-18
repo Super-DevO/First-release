@@ -1,0 +1,52 @@
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="/assets/images/logo.png" alt="company logo" width="100" height="150">
+    <a class="navbar-brand" href="/"><% if (typeof displayname == 'string' && displayname) { %>
+      <%= displayname %>
+      <% } else { %>
+       
+        <% } %>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+
+        <% if (title == "Home"){ %>
+        <li class="nav-item active">
+        <% } else  { %>
+        <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href="/"><i class="fas fa-lg fa-laptop-house"></i> Home </a>
+        </li>
+
+        <% if (title == "Create") { %>
+        <li class="nav-item active">
+        <% } else  { %>
+        <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href="/create"><i class="fab fa-elementor"></i> Create Survey </a>
+        </li>
+
+        <% if (title == "Surveys") { %>
+        <li class="nav-item active">
+        <% } else  { %>
+        <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href="/list"><i class="fas fa-cogs"></i> Survays </a>
+        </li>
+
+        <!--this is not hooked up yet-->
+        <% if (typeof displayname == 'string' && displayname != 'Welcome') { %>
+          <li class="navbar-text"><i class="fas fa-lg fa-user">Welcome, <%= displayname %></i></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">
+            <i class="fas fa-lg fa-sign-out-alt"></i>logout</a></li>
+          <% } else { %>
+            <li class="nav-item"><a href="/login" class="nav-link">
+            <i class="fas fa-lg fa-sign-in-alt"></i> Login</a></li>
+          <% } %>
+
+    </div>
+  </nav>

@@ -9,6 +9,8 @@ router.get('/', indexController.displayHomePage);
 router.get('/login', indexController.displayLogin);
 //needs a post
 
+router.get('/SLanding', indexController.displaySLanding);
+
 router.get('/instructions', indexController.displayInstruction);
 
 //for listing will do later

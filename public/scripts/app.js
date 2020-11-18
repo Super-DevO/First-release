@@ -5,7 +5,7 @@
     {
         console.log("App Started...");
 
-        let deleteButtons = document.querySelectorAll('.btn-fanger');
+        let deleteButtons = document.querySelectorAll('.btn-danger');
         
         for(button of deleteButtons)
         {
