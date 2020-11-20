@@ -1,8 +1,7 @@
 const { exports: exp } = module;
 const mongoose = require("mongoose");
 
-const surveysUriDB = "mongodb+srv://admin:admin@books.tgim5.mongodb.net/surveys?retryWrites=true&w=majority";
-const questionsUriDB = "mongodb+srv://admin:admin@books.tgim5.mongodb.net/questions?retryWrites=true&w=majority";
+const { surveysUriDB, questionsUriDB, usersUriDB } = require("./databasesURI.json");
 
 //export mongoose
 exp.mongoose = mongoose;
@@ -17,6 +16,14 @@ exp.surveysDBConnection = mongoose.connect(surveysUriDB, {
 
 //create & export a connection with the questions database
 exp.questionsDBConnection = mongoose.connect(questionsUriDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
+
+//create & export a connection with the users database
+exp.usersDBConnection = mongoose.connect(usersUriDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -65,8 +72,32 @@ const Question = new mongoose.Schema({
   collection: "questions"
 });
 
+//create the schema for users
+const User = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true 
+  },
+  psw: {
+    type: String,
+    required: true
+  },
+  created: {
+    type: Date,
+    default: new Date()
+  },
+  salt: String,
+  __v: Number
+},
+{
+  collection: "users"
+});
+
 //set & export the schema for the surveys
 exp.schemaSurvey = mongoose.model("Survey", Survey);
 
-//set & export the schema fro the questions
+//set & export the schema for the questions
 exp.schemaQuestion = mongoose.model("Question", Question);
+
+//set & export the schema for the users
+exp.schemaQuestion = mongoose.model("User", User);

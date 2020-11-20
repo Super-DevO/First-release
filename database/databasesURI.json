@@ -1,0 +1,5 @@
+{
+  "surveysUriDB": "mongodb+srv://admin:admin@books.tgim5.mongodb.net/surveys?retryWrites=true&w=majority",
+  "questionsUriDB": "mongodb+srv://admin:admin@books.tgim5.mongodb.net/questions?retryWrites=true&w=majority",
+  "usersUriDB": "mongodb+srv://admin:admin@books.tgim5.mongodb.net/users?retryWrites=true&w=majority"
+}
