@@ -19,9 +19,30 @@ module.exports.displayLogin = (req, res, next) => {
     res.render('login', { title: 'Login' });
 }
 
-module.exports.displaySLanding = (req, res, next) => {
-    res.render('slanding', { title: 'Your Survey'});
+//some post login stuff
+
+
+
+
+module.exports.deleteSurvey = (req, res, next) => {
+    let id = req.body.id;
+    Survey.remove({_id: id}, (err) => {
+        if(err)
+        {
+            res.end(err);
+        }
+        else
+        {
+            res.redirect('/list');
+        }
+    });
 }
+
+module.exports.displaySLanding = (req, res, next) => {
+    console.log(req.params._id);
+    res.render('slanding', { title: 'Your Survey', survey: req.params._id });
+}
+
 module.exports.displayInstruction = (req, res, next) => {
     res.render('instructions', {title: 'Instructions'});
 }
@@ -173,3 +194,58 @@ module.exports.processNewSurvey = (req, res, next) => {
 
 }
 
+module.exports.displayYlist = (req, res, next) => {
+    console.log(req.user);
+    let list_to_go = [Survey];
+    let j = 1;
+    //build an array of Surveys and pass it to the file
+    Survey.find( (err, surveys) => {
+        if (err) {
+          return console.error(err);
+        }
+        else {
+            for(i = 0; i < surveys.length; i++)
+            {
+                
+                if(surveys[i].Author === req.user.username)
+                {
+                    console.log(surveys[i].Name + " added");
+                    list_to_go.push(surveys[j]);
+                    j++;
+                }
+            }
+            console.log(list_to_go);
+            for(m = 1; m < list_to_go.length; m++)
+            {
+                console.log(m);
+                console.log(list_to_go[m].Name);
+            }
+          res.render('ylist', {
+            title: 'Your Surveys',
+            surveys: list_to_go
+          });
+        }
+      });
+}
+
+module.exports.performDelete = (req, res, next) => {
+    let id = req.params.id;
+    Survey.remove({_id: id}, (err) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+             // refresh the book list
+             res.redirect('/list');
+        }
+    });
+}
+
+module.exports.performLogout = (req, res, next) => {
+    console.log("logging out");
+    req.logout();
+    res.redirect('/');
+}

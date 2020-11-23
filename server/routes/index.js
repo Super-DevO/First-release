@@ -9,7 +9,12 @@ router.get('/', indexController.displayHomePage);
 router.get('/login', indexController.displayLogin);
 //needs a post
 
-router.get('/SLanding', indexController.displaySLanding);
+router.get('/logout', indexController.performLogout);
+
+router.get('/ylist', indexController.displayYlist);
+
+
+router.get('/slanding/:id', indexController.displaySLanding);
 
 router.get('/instructions', indexController.displayInstruction);
 
@@ -19,6 +24,8 @@ router.get('/list',indexController.displayListSurvey);
 router.get('/list/:id', indexController.deleteSurvey);
 
 router.get('/TakeSurvey/:id', indexController.displaySurvey);
+
+router.get('/delete/:_id', indexController.performDelete);
 
 router.get('/thanks', indexController.processSurvey);
 

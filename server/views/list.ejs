@@ -2,58 +2,63 @@
 
 <%- include partials/main_nav.ejs %>
 
-
-    <!-- MAIN CONTENT -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-offset-1 col-md-10"><br><br>
-          <h2>All the Surveys </h2>
-          <h3>page: <%= title %></h3><hr>
-          <!-- To fix we add the button  -->
-          <!-- meaning change the href  -->
-          <!-- get route name and go from there -->
-          <br>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th class="text-center col-2">Survey</th>
-                  <th class="text-center col-2">Author</th>
-                 <!-- <th class="text-center">Genre</th>
-                  I added some titles here also-->
-                  <th class="text-center col-2">Action</th>
-                 <th class="text-center col-2">Participate!</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <% for (let count = 0; count < surveys.length; count++) { %>
-                    <tr>
-                      <td><%= surveys[count].Name %></td>
-                      <td class="text-center col-2"><%= surveys[count].Author %></td>
-                      <td class="text-center col-2"><%= surveys[count].Author %></td>
+<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+  <div class="col-md-6 px-0">
+    <h1 class="display-4 font-italic">Surveys List</h1>
+    <p class="lead my-3">This is what is on the menu today.  Feel free to provide you opinions for any of them.</p>
+    <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Remember that the list is updated everytime someone adds to it.  So check back later!</a></p>
+  </div>
+</div>
 
 
-                      <td class="text-center col-2">
-                        <a href="/list/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
-                          <i class="fas fa-arrow-alt-circle-down"></i> delete</a></td>
-    
-                      <td class="text-center col-1">
-                        <a href="/TakeSurvey/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
-                        <i class="fas fa-arrow-alt-circle-down"></i> Take</a>
-                    </td>
-                    </tr> 
-                  <% } %>
-              </tbody>
-            </table>
+<% for (let count = 0; count < surveys.length; count++) { %>
+  <div class="row mb-2">
+      <div class="col-md-6">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">Genera</strong>
+            <h3 class="mb-0"><%= surveys[count].Name %></h3>
+            <div class="mb-1 text-muted"><%= surveys[count].Author %></div>
+            <p class="card-text mb-auto"><%= surveys[count].Description %></p>
+            <br>
+            <div class="btn-group" style="width:50%">
+
+              <a  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">View
+              </a>
+              
+                <button  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
+              <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
+            </div>
+            <% count++; %>
+            </div>
+          <div class="col-auto d-none d-lg-block">
+            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
           </div>
-           <div class="col-md-offset-1 col-md-10 text-center">
-            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-success">Genera</strong>
+            <h3 class="mb-0"><%= surveys[count].Name %></h3>
+            <div class="mb-1 text-muted"><%= surveys[count].Author %></div>
+            <p class="mb-auto"><%= surveys[count].Description %></p>
+            <div class="btn-group" style="width:50%">
+              <a type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">View</a>
+              <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
+              <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
+            </div>
+          </div>
+          <div class="col-auto d-none d-lg-block">
+            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
           </div>
         </div>
       </div>
     </div>
-<br><br><br><br><br><br><br>
+  </div>
+  <% } %>
+
+
 
 <%- include partials/bottom_nav.ejs %>  
 
