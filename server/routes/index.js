@@ -9,6 +9,8 @@ router.get('/', indexController.displayHomePage);
 router.get('/login', indexController.displayLogin);
 //needs a post
 
+router.get('/loggedInHome', indexController.displayLoginHome);
+
 router.get('/logout', indexController.performLogout);
 
 router.get('/ylist', indexController.displayYlist);
