@@ -21,6 +21,10 @@ module.exports.displayLogin = (req, res, next) => {
 
 //some post login stuff
 
+//this needs to point to the 
+module.exports.displayLoginHome = (req, res, next) => {
+    res.render('loggedInHome', { title: 'You are now logged in'});
+}
 
 
 
