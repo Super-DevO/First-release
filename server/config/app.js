@@ -9,7 +9,6 @@ let bodyParser = require('body-parser');
 let localStrategy = require('passport-local').Strategy;
 let flash = require('connect-flash');
 let session = require('express-session');
-
 // database setup
 let mongoose = require('mongoose');
 let DB = require('./db');
