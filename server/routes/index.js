@@ -7,7 +7,8 @@ let indexController = require('../controllers/index');
 router.get('/', indexController.displayHomePage);
 
 router.get('/login', indexController.displayLogin);
-//needs a post
+
+router.post('/login', indexController.processLoginPage);
 
 router.get('/loggedInHome', indexController.displayLoginHome);
 
@@ -20,10 +21,12 @@ router.get('/slanding/:id', indexController.displaySLanding);
 
 router.get('/instructions', indexController.displayInstruction);
 
-//for listing will do later
+
 router.get('/list',indexController.displayListSurvey);
 
+//for listing will do later
 router.get('/list/:id', indexController.deleteSurvey);
+
 
 router.get('/TakeSurvey/:id', indexController.displaySurvey);
 
