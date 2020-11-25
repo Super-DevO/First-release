@@ -1,14 +1,77 @@
-<%- include partials/header.ejs %>
+<%- include partials/createHeader.ejs %>
 
 <%- include partials/main_nav.ejs %>
 
+<main role="main">
 
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+          <div class="container">
+            <div class="carousel-caption text-left">
+              <h1>Statement Survey</h1>
+              <p>With this type of survey you pose a question.  People can write whatever they want to voice their opinions. Oh the options, just think of the possibilities.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">some button</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Oh the Options</h1>
+              <p>Do you remember multiple choice questions from school... and did you like them.  Well this is just like that.  You provide the questions and responses.  They choose the one they like best, or "C" cause its always "C" ;)</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">some button</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+          <div class="container">
+            <div class="carousel-caption text-right">
+              <h1>Warm, Warmer... Boiling Hot</h1>
+              <p>Much like a multiple choice question but in this version you just supply the question and they respond with one of a preset group of responses.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    
     <div class="container">
       <div class="row">
           <div class="offset-md-3 col-md-6">
+            <form class="form" method="POST">
+            <div class="input-group mb-3">
+                <select class="custom-select" id="inputGroupSelect02">
+                  <option selected>Choose...</option>
+                  <option value="1">Statement</option>
+                  <option value="2">Oh the Choices</option>
+                  <option value="3">Boiling Hot</option>
+                </select>
+                <div class="input-group-append">
+                  <label class="input-group-text" for="inputGroupSelect02">Survey Type</label>
+                </div>
+              </div>
+              <hr>
               <h1>Create Survey</h1>
-  
-              <form class="form" method="POST">
+              <hr>
+              
                   <div class="form-group">
                       <label for="nameTextField">Survey Name</label>
                       <input type="text" class="form-control"
@@ -43,6 +106,8 @@
   
               </form>
 
+            <br><br><br><br><br>  
+
 <%- include partials/bottom_nav.ejs %>  
 
-<%- include partials/footer.ejs %>
+<%- include partials/createFooter.ejs %>
