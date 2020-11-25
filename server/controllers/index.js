@@ -8,6 +8,8 @@ let url = require('url');
 let Survey = require('../models/survey');
 let Question = require('../models/child');
 let Resp = require('../models/responses');
+let userModel = require('../models/users');
+let User = userModel.User;
 //let local = mongoose.model('local', surveyModel);
 
 //should render ../views/index.ejs//
@@ -50,6 +52,42 @@ module.exports.displayLoginHome = (req, res, next) => {
     res.render('loggedInHome', { title: 'You are now logged in'});
 }
 
+module.exports.displayRegister = (req, res, next) => {
+    res.render('register', { title: 'Register' });
+}
+
+module.exports.processRegister = (req, res, next) => {
+    let tempUser = User({
+        username: req.body.username,
+        //password
+        email: req.body.email
+    });
+    User.register(tempUser, req.body.password, (err) => {
+        if(err)
+        {
+            if(err.name == "UserExistsError"){
+                req.flash(
+                    'registerMessage',
+                    'Registration Error: User Already Exists!'
+                );
+                console.log("Error: User Already Exists");
+            }
+            return res.render('register', {
+                title: 'Register',
+                messages: req.flash('register'),
+                displayName: req.user ? req.user.displayname: ''
+            });
+        }
+        else
+        {
+            //successful registration to the real network page
+            return passport.authenticate('local')(req, res, ()=>{
+                res.redirect('/loggedInHome');
+            })
+        }
+    });
+
+}
 
 
 module.exports.deleteSurvey = (req, res, next) => {

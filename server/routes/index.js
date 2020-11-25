@@ -3,6 +3,14 @@ let router = express.Router();
 
 let indexController = require('../controllers/index');
 
+function requireAuth(req, res, next)
+{
+    if(!req.isAuthenticated()){
+        return res.redirect('/login');
+    }
+    next();
+}
+
 /* GET Landing page */
 router.get('/', indexController.displayHomePage);
 
@@ -11,6 +19,10 @@ router.get('/login', indexController.displayLogin);
 router.post('/login', indexController.processLoginPage);
 
 router.get('/loggedInHome', indexController.displayLoginHome);
+
+router.get('/register', indexController.displayRegister);
+
+router.post('/register', indexController.processRegister);
 
 router.get('/logout', indexController.performLogout);
 
