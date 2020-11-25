@@ -13,6 +13,7 @@ let surveyModel = new mongoose.Schema({
     Name: String,
     Author: String,
     Description: String,
+    Type: String,
     quearray: [surveyQuestionModel]
 },
 {

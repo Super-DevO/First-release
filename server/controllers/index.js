@@ -158,9 +158,28 @@ module.exports.deleteSurvey = (req, res, next) => {
 
 module.exports.displayQuestionEntry = (req, res, next) => {
     let name = req.params.name;
-    console.log("ID should be below");
+    //console.log("ID should be below");
     //console.log(name);
     res.render('survey_question', {title: 'Question Entry', id: name });
+
+   
+    //res.render('survey_question', {title: 'Question Entry', name: name });
+}
+
+module.exports.displayQuestionEntry2 = (req, res, next) => {
+    let name = req.params.name;
+    //console.log("ID should be below");
+    //console.log(name);
+    res.render('survey_question2', {title: 'Question Entry', id: name });
+
+   
+    //res.render('survey_question', {title: 'Question Entry', name: name });
+}
+
+module.exports.displayQuestionEntry3 = (req, res, next) => {
+    let name = req.params.name;
+
+    res.render('survey_question3', {title: 'Question Entry', id: name });
 
    
     //res.render('survey_question', {title: 'Question Entry', name: name });
@@ -225,6 +244,77 @@ module.exports.processQuestionAdd = (req, res, next) => {
     })
 }
 
+module.exports.processQuestionAdd2 = (req, res, next) => {
+    let name = req.params.name;
+    console.log(req.body.Question);
+    let newQuestion = Question({
+        "question": req.body.Question,
+        "optA": req.body.optA,
+        "optB": req.body.optB,
+        "optC": req.body.optC,
+        "optD": req.body.optD
+    });
+
+    Survey.findOne({ 'Name': name }, (err, tempSurvey) => {
+        if(err){
+            res.send(err);
+        } else {
+            //console.log(tempSurvey);
+            tempSurvey.quearray.push(newQuestion);
+            //console.log(tempSurvey);
+            Survey.updateOne({ _id: tempSurvey._id}, tempSurvey, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                }
+                else
+                {
+                    console.log("question added");
+                    res.redirect(url.format({
+                        'pathname': '/survey_question/' + name
+                    }));
+                }
+            }); 
+        }
+    })
+}
+
+module.exports.processQuestionAdd3 = (req, res, next) => {
+    let name = req.params.name;
+    console.log(req.body.Question);
+    let newQuestion = Question({
+        "question": req.body.Question,
+        "optA": req.body.optA,
+        "optB": req.body.optB,
+        "optC": req.body.optC,
+        "optD": req.body.optD
+    });
+
+    Survey.findOne({ 'Name': name }, (err, tempSurvey) => {
+        if(err){
+            res.send(err);
+        } else {
+            //console.log(tempSurvey);
+            tempSurvey.quearray.push(newQuestion);
+            //console.log(tempSurvey);
+            Survey.updateOne({ _id: tempSurvey._id}, tempSurvey, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                }
+                else
+                {
+                    console.log("question added");
+                    res.redirect(url.format({
+                        'pathname': '/survey_question/' + name
+                    }));
+                }
+            }); 
+        }
+    })
+}
 
 module.exports.displayUserPage = (req, res, next) => {
     res.render('user', { title: 'User Local' });
@@ -240,10 +330,14 @@ module.exports.processNewSurvey = (req, res, next) => {
         "Name": req.body.Name,
         "Author": req.body.Author,
         "Description": req.body.Description,
+        "Type": req.body.surveyType
        // "quearray": null
     });
     //TODO: verify that the name is not in use already
     //TODO: differentiate that the correct user can only see their surveys
+    let que = req.query;
+    console.log(que);
+    console.log(req.body);
     Survey.create(newSurvey, (err, Survey) => {
         if(err)
         {
@@ -252,9 +346,24 @@ module.exports.processNewSurvey = (req, res, next) => {
         } else 
         {
             let name = req.body.Name;
-            res.redirect(url.format({
-                pathname: '/survey_question/' + req.body.Name
-            }));
+            if(req.body.surveyType == 1)
+            {
+                res.redirect(url.format({
+                    pathname: '/survey_question/' + req.body.Name
+                }));
+            }
+            else if(req.body.surveyType == 2)
+            {
+                res.redirect(url.format({
+                    pathname: '/survey_question2/' + req.body.Name
+                }));
+            }
+            else if(req.body.surveyType == 3)
+            {
+                res.redirect(url.format({
+                    pathname: '/survey_question3/' + req.body.Name
+                }));
+            }
         }
     });
 

@@ -53,6 +53,14 @@ router.get('/survey_question/:name', indexController.displayQuestionEntry);
 //the post for the questions
 router.post('/survey_question/:name', indexController.processQuestionAdd);
 
+router.get('/survey_question2/:name', indexController.displayQuestionEntry2);
+//the post for the questions
+router.post('/survey_question2/:name', indexController.processQuestionAdd2);
+
+router.get('/survey_question3/:name', indexController.displayQuestionEntry3);
+//the post for the questions
+router.post('/survey_question3/:name', indexController.processQuestionAdd3);
+
 //add the edit question route
 
 
