@@ -25,18 +25,6 @@ let User = mongoose.Schema(
             default: '',
             trim: true,
             required: 'is required'
-       },
-       displayname:
-       {
-        type: String,
-        default: "",
-        trim: true,
-        required: 'display name is required'
-       },
-       created:
-       {
-        type: Date,
-        default: Date.now
        }
     },
     {
