@@ -25,11 +25,9 @@
             <br>
             <div class="btn-group" style="width:50%">
 
-              <a  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">View
+              <a  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Participate
               </a>
-              
-                <button  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
-              <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
+ 
             </div>
             <% count++; %>
             </div>
@@ -45,10 +43,9 @@
             <h3 class="mb-0"><%= surveys[count].Name %></h3>
             <div class="mb-1 text-muted"><%= surveys[count].Author %></div>
             <p class="mb-auto"><%= surveys[count].Description %></p>
+            <br>
             <div class="btn-group" style="width:50%">
-              <a type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">View</a>
-              <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
-              <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
+              <a type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Participate</a>
             </div>
           </div>
           <div class="col-auto d-none d-lg-block">
