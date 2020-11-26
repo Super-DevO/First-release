@@ -30,21 +30,17 @@ module.exports.processLoginPage = (req, res, next) => {
         }
         if(!user)
         {
+            req.flash('loginMessage', 'Authentication Error');
             return res.redirect('/login');
         }
         req.login(user, (err) => {
             if(err){
                 return next(err);
             }
-            //return res.redirect('/');
-            //console.log(user.username);
-            return res.redirect(url.format({
-                'pathname': '/loggedInHome',
-                'uname': user.username,
-                'id': user._id
-            }));
+            return res.redirect('/loggedInHome');
         });
     })(req, res, next);
+
 }
 
 //this needs to point to the 
