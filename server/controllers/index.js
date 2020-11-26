@@ -129,6 +129,10 @@ module.exports.displaySurvey = (req, res, next) => {
     })
 }
 
+module.exports.displayLeshawn = (req, res, next) => {
+    res.render('view1', {title: 'Leshawn'});
+}
+
 module.exports.displayListSurvey = (req, res, next) => {
     Survey.find( (err, surveys) => {
         if (err) {

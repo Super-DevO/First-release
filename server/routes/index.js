@@ -28,6 +28,7 @@ router.get('/logout', indexController.performLogout);
 
 router.get('/ylist', indexController.displayYlist);
 
+router.get('/leshawnsPart', indexController.displayLeshawn);
 
 router.get('/slanding/:id', indexController.displaySLanding);
 
