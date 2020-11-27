@@ -44,6 +44,10 @@ module.exports.processLoginPage = (req, res, next) => {
 
 }
 
+module.exports.displayEditPage = (req, res, next) => {
+    res.render('/edit', { title: 'Edit Your Survey' });
+}
+
 //this needs to point to the 
 module.exports.displayLoginHome = (req, res, next) => {
     res.render('loggedInHome', { title: 'You are now logged in'});

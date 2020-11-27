@@ -12,7 +12,7 @@
   </div>
 
 
-  <% for (let count = 1; count < surveys.length; count++) { %>
+  <% for (let count = 0; count < surveys.length; count++) { %>
     <div class="row mb-2">
         <div class="col-md-6">
           <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -24,10 +24,11 @@
               
               <div class="btn-group" style="width:50%">
                 <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <button type="button" href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
                 <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
               </div>
               <% count++; %>
+              <% if(surveys[count] != null) { %>
               </div>
             <div class="col-auto d-none d-lg-block">
               <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
@@ -44,7 +45,7 @@
               <p class="mb-auto"><%= surveys[count]._id %></p>
               <div class="btn-group" style="width:50%">
                 <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <button type="button" href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
                 <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
               </div>
             </div>
@@ -55,6 +56,7 @@
         </div>
       </div>
     </div>
+    <% } %>
     <% } %>
 
 
