@@ -37,12 +37,13 @@ router.get('/instructions', indexController.displayInstruction);
 
 router.get('/list',indexController.displayListSurvey);
 
-//for listing will do later
+//this should not be here it should only be from the ylanding page
 router.get('/list/:id', indexController.deleteSurvey);
 
 
 router.get('/TakeSurvey/:id', indexController.displaySurvey);
 
+//this is the acutal delete I think we should use this
 router.get('/delete/:_id', indexController.performDelete);
 
 router.get('/thanks', indexController.processSurvey);

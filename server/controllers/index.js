@@ -9,6 +9,7 @@ let Survey = require('../models/survey');
 let Question = require('../models/child');
 let Resp = require('../models/responses');
 let userModel = require('../models/users');
+//const { Alert } = require('bootstrap');
 let User = userModel.User;
 //let local = mongoose.model('local', surveyModel);
 
@@ -139,6 +140,11 @@ module.exports.displayListSurvey = (req, res, next) => {
           return console.error(err);
         }
         else {
+            console.log(surveys[0]);
+            if(surveys == undefined)
+            {
+                res.render('create', { title: 'Create Survey'} );
+            }
           res.render('list', {
             title: 'Surveys',
             surveys: surveys

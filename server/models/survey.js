@@ -14,6 +14,7 @@ let surveyModel = new mongoose.Schema({
     Author: String,
     Description: String,
     Type: String,
+    Genera: String,
     quearray: [surveyQuestionModel]
 },
 {
