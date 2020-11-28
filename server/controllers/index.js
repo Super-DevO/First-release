@@ -44,8 +44,16 @@ module.exports.processLoginPage = (req, res, next) => {
 
 }
 
+//edits made here
 module.exports.displayEditPage = (req, res, next) => {
-    res.render('/edit', { title: 'Edit Your Survey' });
+    console.log(req.params.id);
+    Survey.findById(req.params.id, function (err, currentSurvey) {
+        if(err){
+            res.render(err);
+        } else {
+            res.render('edit', { title: 'Edit Your Survey', survey: currentSurvey });
+        }
+    })
 }
 
 //this needs to point to the 
@@ -131,7 +139,7 @@ module.exports.displaySurvey = (req, res, next) => {
             console.log(locSurv);
             res.render('TakeSurvey', { title: 'TakeSurvey', locSurv: locSurv });
         }
-    })
+    });
 }
 
 module.exports.displayLeshawn = (req, res, next) => {
@@ -386,7 +394,7 @@ module.exports.processNewSurvey = (req, res, next) => {
 }
 
 module.exports.displayYlist = (req, res, next) => {
-    console.log(req.user);
+    //console.log(req.user);
     let list_to_go = [Survey];
     let j = 1;
     //build an array of Surveys and pass it to the file
@@ -401,8 +409,8 @@ module.exports.displayYlist = (req, res, next) => {
                 if(surveys[i].Author === req.user.username)
                 {
                     console.log(surveys[i].Name + " added");
-                    list_to_go.push(surveys[j]);
-                    j++;
+                    list_to_go.push(surveys[i]);
+                    
                 }
             }
             console.log(list_to_go);
@@ -417,6 +425,46 @@ module.exports.displayYlist = (req, res, next) => {
           });
         }
       });
+}
+
+module.exports.deleteQuestion = (req, res, next) => {
+    console.log(req.params.id);
+    let id = req.params.id;
+
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    console.log(index[0]);
+    Survey.findById(index[0], function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            console.log(locSurv);
+            //locSurv.quearray[indexNum].question = "Next Question";
+            res.render('edit', { title: 'Edit Your Survey', survey: locSurv });
+        }
+    });
+    
+}
+
+//this may need to be a form
+module.exports.editQuestion = (req, res, next) => {
+    console.log(req.params.id);
+    let id = req.params.id;
+    //let param = "fuck you you fucking fuck";
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    console.log(index[0]);
+    Survey.findById(index[0], function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            console.log(locSurv);
+            locSurv.quearray[indexNum].question = "Next Question";
+            res.render('edit', { title: 'Edit Your Survey', survey: locSurv });
+        }
+    });
+    //res.render('edit', { title: 'Edit Your Survey', survey: index[0] });
+
 }
 
 module.exports.performDelete = (req, res, next) => {

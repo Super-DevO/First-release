@@ -2,46 +2,131 @@ https://first-release.herokuapp.com/
 first video
 https://youtu.be/owqn7ompRpE
 
-<% for (let count = 0; count < surveys.length; count++) { %>
-  <div class="row mb-2">
-      <div class="col-md-6">
-        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">Genera</strong>
-            <h3 class="mb-0"><%= surveys[count].Name %></h3>
-            <div class="mb-1 text-muted"><%= surveys[count].Author %></div>
-            <p class="card-text mb-auto"><%= surveys[count].Description %></p>
-            <br>
-            <div class="btn-group" style="width:50%">
+<%= surveys[0].Name %>
+<%= surveys[0].Author %>
+<%= surveys[0].Description %>
 
-              <a  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Participate
-              </a>
- 
-            </div>
-            <% count++; %>
-            </div>
-          <div class="col-auto d-none d-lg-block">
-            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-success">Genera</strong>
-            <h3 class="mb-0"><%= surveys[count].Name %></h3>
-            <div class="mb-1 text-muted"><%= surveys[count].Author %></div>
-            <p class="mb-auto"><%= surveys[count].Description %></p>
+ <button type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">View</button>
+                <button type="button" href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <button type="button" href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Delete</button>
+              
+
+    Survey.findById(survey, function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            console.log(locSurv);
+            res.render('TakeSurvey', { title: 'TakeSurvey', locSurv: locSurv });
+        }
+    })
+
+</div>
+        <div class="row">
+          <div class="col-md-offset-1 col-md-10">
+            
+            <!-- ------------------------ -->
+            <!-- FIX THE ADD BUTTON BELOW -->
+            <!-- ------------------------ -->
+            <hr>
             <br>
-            <div class="btn-group" style="width:50%">
-              <a type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Participate</a>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Author</th>
+                    <th class="text-center">Genre</th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <!-- Template Row -->
+   
+                  <tr>
+                    <td>some stufff</td>
+                    <td class="text-center">books</td>
+                    <td class="text-center">books</td>
+                    <td class="text-center">books</td>
+  
+                    <td class="text-center">
+                      <a href="/books/edit/" class="btn btn-primary btn-sm">
+                        <i class="fas fa-pencil-alt"></i> Edit</a>
+                    </td>
+  
+                    <td class="text-center">
+                      <a href="/books/delete/" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> Delete</a>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+             <div class="col-md-offset-1 col-md-10 text-center">
+              <ul class="pagination pagination-lg pager" id="myPager"></ul>
             </div>
           </div>
-          <div class="col-auto d-none d-lg-block">
-            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <% } %>
+deleteQuestion
+http://localhost:3000/deleteQuestion
+
+console.log(req.params.id);
+    console.log(req.params.integer);
+    let ID = req.params.id;
+/<%= survey._id %>-<%= count %>
+"/edit/<%= surveys[count]._id %>"
+
+
+    /*console.log(req.params.id);
+    console.log(req.params.integer);
+    let ID = req.params.id;
+    console.log(req.params.id);
+    let id = req.params.id;
+    let newArray = [Question];
+    let index = id.split("-", 2);
+    console.log(index[0]);
+
+    Survey.findById(index[0], function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            console.log(locSurv);
+            for(let i = 0; i < locSurv.quearray.length; i++){
+                if(i != index[1]){
+                    newArray.push(locSurv.quearray[i]);
+                } else {
+                    console.log('deleted question' + index[1]);
+                }
+            }
+            locSurv.quearray = newArray;
+            res.render('edit', { title: 'Edit Your Survey', survey: locSurv });
+        }
+    });*/
+ /*   Survey.remove({_id: ID}, (err) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+             // refresh the book list
+             res.redirect('/ylist');
+        }
+    });*/
+
+    //res.render('edit', { title: 'Your Edit', survey: ID });
+    //res.render('edit', { title: 'Edit Your Survey', survey: currentSurvey });
+    //res.render('edit/:' + ID, { title: 'Survey' });
+   // res.render('/', { title: 'Edit Your Survey' });
+
+ /*   Survey.findById(ID, function (err, locSurv) {
+        if(err){
+            console.log('no survey found');
+            res.render(err);
+        } else {
+            console.log(locSurv.quearray[req.params.integer]);
+            res.render('/ylist', { title: 'Your Surveys' });
+        }
+    })*/

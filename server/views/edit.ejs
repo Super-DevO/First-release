@@ -1,0 +1,39 @@
+<%- include partials/header.ejs %>
+
+<%- include partials/editSideBar.ejs %>
+
+
+<div class="container" style="padding-left: 200px">
+    <div class="jumbotron">
+        <div class="container">
+            <h1><%= title %> </h1>
+        </div>
+      </div>
+      <div class="container">
+          <h3><%= survey.Name %></h3>delete
+          <hr>
+          <div class="row" sytle="display:flex; flex-wrap: wrap; margin-right: 5; margin-left:15px;">
+            <table>
+                <thead>
+                    <tr>
+                      <th class=" col-md-8">Question</th>
+                      <th class=" col-md-2">Options</th>
+                    </tr>
+                    </thead> 
+                    <% for (let count = 0; count < survey.quearray.length; count++) { %>
+                    <tr>
+                        <td class="col-md-6"><%= survey.quearray[count].question %> - <%= survey.quearray[count]._id %></td>
+                        <td class="text-center col-md-2">
+                          <a href="/editQuestion/<%= survey._id %>-<%= count %>" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+                        </td>
+                        <td class="text-center col-md-2">
+                            <a href="/deleteQuestion/<%= survey._id %>-<%= count %>" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                    </tr>
+                    <% } %>
+            </table>
+          </div>
+        </div>
+</div>

@@ -28,8 +28,14 @@ router.get('/logout', indexController.performLogout);
 
 router.get('/ylist', indexController.displayYlist);
 
-router.get('/edit', indexController.displayEditPage);
+router.get('/edit/:id', indexController.displayEditPage);
 
+//new for edit
+router.get('/deleteQuestion/:id', indexController.deleteQuestion);
+
+router.get('/editQuestion/:id', indexController.editQuestion);
+
+///end of this branch
 router.get('/leshawnsPart', indexController.displayLeshawn);
 
 router.get('/slanding/:id', indexController.displaySLanding);
