@@ -19,7 +19,24 @@ module.exports.displayHomePage = (req, res, next) => {
 }
 
 module.exports.displayLogin = (req, res, next) => {
-    res.render('login', { title: 'Login' });
+    if(!req.user)
+    {
+        console.log("this just ran");
+        res.render('login',{
+        title: 'Login',
+        message: req.flash("User already logged in"),
+        displayname: req.user ? req.user.displayname : "Welcome"
+    })
+    } else {
+        console.log(req.err);
+        if(req.err)
+        {
+            return res.redirect('login');
+        }
+        console.log(req.user);
+        return res.redirect('loggedInHome');
+    }
+    //res.render('login', { title: 'Login' });
 }
 
 module.exports.processLoginPage = (req, res, next) => {
