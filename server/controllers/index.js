@@ -506,31 +506,42 @@ module.exports.displayYlist = (req, res, next) => {
 
 //lists the results of a survey
 module.exports.displayResults1 = (req, res, next) => {
+    let locSurv;
     
     let sid = req.params.id;
     console.log('survey ID: ' + sid);
-    let respArray = [[StateResp]];
-    //get the answers and compare ids
-    Resp.find((err, surveyList) => {
+    Survey.findById(sid, function (err, locSurv) {
         if(err)
         {
             return console.error(err);
         }
         else
         {
-            for(let i = 0; i < surveyList.length; i++)
-            {
-                console.log(surveyList[i]._id);
-                console.log(surveyList[i].resparray);
-                if(surveyList[i]._id === sid){
-                    console.log("found");
-                   // respArray.push(surveyList[i].resparray);
+            let respArray = [[StateResp]];
+            //get the answers and compare ids
+            let surveyName = locSurv.Name;
+            Resp.find((err, surveyList) => {
+                if(err)
+                {
+                    return console.error(err);
                 }
-            }
-            console.log(respArray);
-            res.render('results1', { title: 'Results', RespList: respArray });
+                else
+                {
+                    for(let i = 0; i < surveyList.length; i++)
+                    {
+                        //console.log(surveyList[i].Name);
+                        //console.log(surveyList[i].resparray);
+                        if(surveyList[i].Name === surveyName){
+                            respArray.push(surveyList[i].resparray);
+                        }
+                    }
+                    console.log(respArray);
+                    res.render('results1', { title: 'Results', RespList: respArray, survey: locSurv });
+                }
+            });
         }
-    });
+    }) 
+    
    // res.render('results1', { title: 'Results', RespList: respArray });
 
 }

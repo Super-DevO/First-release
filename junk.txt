@@ -154,3 +154,73 @@ console.log(req.params.id);
     <h2>This could be one of our surveys when taking it</h2>
     <div class=stage>
 
+ <div class=question>
+                <table style="text-align:center; margin:15px">
+                    <tr>
+                        <td><img src="/Assets/images/Pic1(1)-slim.jpg" alt="purple" height=90% width=90% styles="display:block margin:auto "> </td>
+                    </tr>
+                    <tr>
+                        <td>Question Can go here</td>
+                    </tr>
+                </table>
+                <hr>
+            </div>
+
+module.exports.processNewSurvey = (req, res, next) => {
+    //console.log(req.body.Name);
+    let newSurvey = Survey({
+        "Name": req.body.Name,
+        "Author": req.body.Author,
+        "Description": req.body.Description,
+        "Type": req.body.surveyType
+       // "quearray": null
+    });
+    //TODO: verify that the name is not in use already
+    //TODO: differentiate that the correct user can only see their surveys
+    let que = req.query;
+    console.log(que);
+    console.log(req.body);
+    Survey.create(newSurvey, (err, Survey) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        } else 
+        {
+            let name = req.body.Name;
+            if(req.body.surveyType == 1)
+            {
+                res.redirect(url.format({
+                    pathname: '/survey_question/' + req.body.Name
+                }));
+            }
+            else if(req.body.surveyType == 2)
+            {
+                res.redirect(url.format({
+                    pathname: '/survey_question2/' + req.body.Name
+                }));
+            }
+            else if(req.body.surveyType == 3)
+            {
+                res.redirect(url.format({
+                    pathname: '/survey_question3/' + req.body.Name
+                }));
+            }
+        }
+    });
+
+}
+
+let newQuestion = Question({
+        "question": req.body.Question,
+        "optA": req.body.optA,
+        "optB": req.body.optB,
+        "optC": req.body.optC,
+        "optD": req.body.optD
+    });
+
+http://localhost:3000/delete/
+http://localhost:3000/delete/5fc7bff7dddd3f4824b1b15a
+http://localhost:3000/delete/5fc16ddb63f08137183d13b1
+http://localhost:3000/results1/5fc16ddb63f08137183d13b1
+http://localhost:3000/results1/5fc7bff7dddd3f4824b1b15a

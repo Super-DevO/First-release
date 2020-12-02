@@ -6,9 +6,10 @@ let responseModel = new mongoose.Schema({
 });
 
 let answerModel = new mongoose.Schema({
+    sid: String,
     Name: String,
     Author: String,
-    Taker: String,
+
     resparray: [responseModel]
 },
 {
