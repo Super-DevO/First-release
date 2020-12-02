@@ -130,3 +130,27 @@ console.log(req.params.id);
             res.render('/ylist', { title: 'Your Surveys' });
         }
     })*/
+
+
+<p>Survey: <%- survey.Name %></p>
+      <p>Genera: <%- survey.Genera %></p>
+      <p>Author: <%- survey.Author %></p>
+      <p>Desc: <%- survey.Description %></p>
+      <p>Type: <%- survey.Type %></p>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">Title of Survey</a>
+    <hr id="brighten">
+    <a href="#">Brief Summary of Survey</a>
+    <hr id="brighten">
+    <a href="#">controls for page</a>
+    <hr id="brighten">
+    <a href="#">Contact info</a>
+  </div>
+  
+  <div id="main">
+    <button class="openbtn" onclick="openNav()">&#9776; Open info</button>
+    <h2>This could be one of our surveys when taking it</h2>
+    <div class=stage>
+

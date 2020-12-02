@@ -1,48 +1,43 @@
 <%- include partials/header.ejs %>
 
-<%- include partials/main_nav.ejs %>
+<%- include partials/editSideBar.ejs %>
 
-
-<div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">Title of Survey</a>
-    <hr id="brighten">
-    <a href="#">Brief Summary of Survey</a>
-    <hr id="brighten">
-    <a href="#">controls for page</a>
-    <hr id="brighten">
-    <a href="#">Contact info</a>
-  </div>
-  
-  <div id="main">
-    <button class="openbtn" onclick="openNav()">&#9776; Open info</button>
-    <h2>This could be one of our surveys when taking it</h2>
-    <div class=stage>
-        <div class=question>
-            <table style="text-align:center; margin:15px">
-                <tr>
-                    <td><img src="/Assets/images/Pic1(1)-slim.jpg" alt="purple" height=90% width=90% styles="display:block margin:auto "> </td>
-                </tr>
-                <tr>
-                    <td>Question Can go here</td>
-                </tr>
-            </table>
-            <hr>
+    <div class='container' style="padding-left: 200px">
+        <div class='jumbotron'>
+            <h1 class="display-4"> <%= title %>: <%= locSurv.Name %> </h1>
         </div>
+        <form>
+            <% for (let count = 0; count < locSurv.quearray.length; count++) { %>
+                <div class=question>
+                <table style="text-align:center; margin:15px">
+                    <tr>
+                        <td><img src="/Assets/images/Pic1(1)-slim.jpg" alt="purple" height=70% width=90% styles="display:block margin:auto "> </td>
+                    </tr>
+                    <tr>                        
+                        <td><%= locSurv.quearray[count].question %>?</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control"
+                            id="questionTextField"
+                            placeholder="Enter Respose"
+                            name="question" required>
+                        </td>
+                    </tr>
+                    
 
-        <div class=question>
-            <table style="text-align:center; margin:15px">
-                <tr>
-                    <td><img src="/Assets/images/Pic1(1)-slim.jpg" alt="purple" height=90% width=90% styles="display:block margin:auto "> </td>
-                </tr>
-                <tr>
-                    <td>Question Can go here</td>
-                </tr>
-            </table>
-            <hr>
+                    
+                </table>
+                <hr>
+            </div>
+            <% } %>
+        </form>
+            
         </div>
-      </div>
-  </div>
+    
+        
+       
+ 
 
   <br> <br>
   <br>

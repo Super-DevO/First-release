@@ -137,8 +137,18 @@ module.exports.deleteSurvey = (req, res, next) => {
 }
 
 module.exports.displaySLanding = (req, res, next) => {
-    console.log(req.params._id);
-    res.render('slanding', { title: 'Your Survey', survey: req.params._id });
+    let survey = req.params.id;
+    console.log(req.params.id);
+    Survey.findById(survey, function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            console.log(locSurv);
+            //res.render('slanding', { title: 'Your Survey', survey: req.params._id });
+
+            res.render('slanding', { title: 'TakeSurvey', locSurv: locSurv });
+        }
+    });
 }
 
 module.exports.displayInstruction = (req, res, next) => {
@@ -174,6 +184,7 @@ module.exports.displayListSurvey = (req, res, next) => {
             {
                 res.render('create', { title: 'Create Survey'} );
             }
+            console.log(surveys);
           res.render('list', {
             title: 'Surveys',
             surveys: surveys
