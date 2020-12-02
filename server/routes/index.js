@@ -38,8 +38,14 @@ router.get('/editQuestion/:id', indexController.editQuestion);
 ///end of this branch
 router.get('/leshawnsPart', indexController.displayLeshawn);
 
+//where we get answers
 router.get('/slanding/:id', indexController.displaySLanding);
 
+router.post('/slanding/:id', indexController.processSurveyQuestion);
+
+router.get('/thanks', indexController.displayThanks);
+
+//bs pages
 router.get('/instructions', indexController.displayInstruction);
 
 
@@ -51,10 +57,11 @@ router.get('/list/:id', indexController.deleteSurvey);
 
 router.get('/TakeSurvey/:id', indexController.displaySurvey);
 
-//this is the acutal delete I think we should use this
+//to delete each survey in user
 router.get('/delete/:_id', indexController.performDelete);
 
-router.get('/thanks', indexController.processSurvey);
+router.get('/results1/:id', indexController.displayResults1);
+
 
 
 //requires auth

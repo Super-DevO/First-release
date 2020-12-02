@@ -23,7 +23,7 @@
               <p class="card-text mb-auto"><%= surveys[count].Description %></p>
               
               <div class="btn-group" style="width:50%">
-                <a  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">View</a>
+                <a  href="/results1/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Results</a>
                 <a  href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
                 <a  href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
 
@@ -45,9 +45,10 @@
               <p class="mb-auto"><%= surveys[count].Description %></p>
               <p class="mb-auto"><%= surveys[count]._id %></p>
               <div class="btn-group" style="width:50%">
-                <a  href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">View</a>
+                <!--change this to view the results-->
+                <a  href="/results1/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Results</a>
                 <a  href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
-                <a  href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
+                <a  href="/deleteQuestion/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
 
                </div>
             </div>

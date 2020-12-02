@@ -8,6 +8,8 @@ let url = require('url');
 let Survey = require('../models/survey');
 let Question = require('../models/child');
 let Resp = require('../models/responses');
+let StateResp = require('../models/StateResponse');
+let StateChildResp = require('../models/stateChild');
 let userModel = require('../models/users');
 //const { Alert } = require('bootstrap');
 let User = userModel.User;
@@ -169,6 +171,51 @@ module.exports.displaySurvey = (req, res, next) => {
     });
 }
 
+module.exports.processSurveyQuestion = (req, res, next) => {
+    let surveyID = req.params.id;
+    let respArray = [StateChildResp];
+    let newStateChild = new StateChildResp;
+    //find the survey
+    Survey.findById(surveyID, function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            console.log(locSurv);
+            console.log(locSurv.quearray.length);
+            let newAnswer = new StateResp({
+                'sid': surveyID,
+                'Name': locSurv.Name,
+                'Author': locSurv.Author,
+                'SomeShit': 'ehlloe',
+                'con': "didie",
+                'resparray': respArray
+            });
+            for(let i = 0; i < locSurv.quearray.length; i++)
+            {
+                newStateChild.question = locSurv.quearray[i].Question;
+                newStateChild.qid = locSurv.Question;
+                newStateChild.resp = req.body.question[i];
+                newAnswer.resparray.push(newStateChild);
+            }
+            Resp.create(newAnswer, (err, Resp) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                } else 
+                {
+                    console.log('response added');
+                    res.redirect('/thanks');
+                }
+            });
+        } 
+    });
+}
+
+module.exports.displayThanks = (req, res, next) => {
+    res.render('thanks', { title: "Thanks"});
+}
+
 module.exports.displayLeshawn = (req, res, next) => {
     res.render('view1', {title: 'Leshawn'});
 }
@@ -237,7 +284,9 @@ module.exports.displayQuestionEntry3 = (req, res, next) => {
     //res.render('survey_question', {title: 'Question Entry', name: name });
 }
 
+//may be the old version of the survey porcessor
 module.exports.processSurvey = (req, res, next) => {
+//must be changed to auto add the personal stuff
     let newResp = Resp({
         "Name": 'steve',
         "Author": 'steve',
@@ -259,16 +308,12 @@ module.exports.processSurvey = (req, res, next) => {
     res.render('thanks', { title: 'thanks'});
 }
 
-
+//add questions
 module.exports.processQuestionAdd = (req, res, next) => {
     let name = req.params.name;
     console.log(req.body.Question);
     let newQuestion = Question({
         "question": req.body.Question,
-        "optA": req.body.optA,
-        "optB": req.body.optB,
-        "optC": req.body.optC,
-        "optD": req.body.optD
     });
 
     Survey.findOne({ 'Name': name }, (err, tempSurvey) => {
@@ -296,6 +341,7 @@ module.exports.processQuestionAdd = (req, res, next) => {
     })
 }
 
+//to add the mc questions
 module.exports.processQuestionAdd2 = (req, res, next) => {
     let name = req.params.name;
     console.log(req.body.Question);
@@ -332,6 +378,7 @@ module.exports.processQuestionAdd2 = (req, res, next) => {
     })
 }
 
+//to process the heat questions
 module.exports.processQuestionAdd3 = (req, res, next) => {
     let name = req.params.name;
     console.log(req.body.Question);
@@ -375,7 +422,8 @@ module.exports.displayUserPage = (req, res, next) => {
 module.exports.displayCreateSurvey = (req, res, next) => {
     res.render('create', { title: 'Create Survey' });
 }
-//below is the post for create survey - do this with the added feature
+
+//adds a new survey
 module.exports.processNewSurvey = (req, res, next) => {
     //console.log(req.body.Name);
     let newSurvey = Survey({
@@ -421,6 +469,7 @@ module.exports.processNewSurvey = (req, res, next) => {
 
 }
 
+//will list the surveys of individual users
 module.exports.displayYlist = (req, res, next) => {
     //console.log(req.user);
     let list_to_go = [Survey];
@@ -455,6 +504,39 @@ module.exports.displayYlist = (req, res, next) => {
       });
 }
 
+//lists the results of a survey
+module.exports.displayResults1 = (req, res, next) => {
+    
+    let sid = req.params.id;
+    console.log('survey ID: ' + sid);
+    let respArray = [[StateResp]];
+    //get the answers and compare ids
+    Resp.find((err, surveyList) => {
+        if(err)
+        {
+            return console.error(err);
+        }
+        else
+        {
+            for(let i = 0; i < surveyList.length; i++)
+            {
+                console.log(surveyList[i]._id);
+                console.log(surveyList[i].resparray);
+                if(surveyList[i]._id === sid){
+                    console.log("found");
+                   // respArray.push(surveyList[i].resparray);
+                }
+            }
+            console.log(respArray);
+            res.render('results1', { title: 'Results', RespList: respArray });
+        }
+    });
+   // res.render('results1', { title: 'Results', RespList: respArray });
+
+}
+
+
+//removes an individual quesiton from a survey
 module.exports.deleteQuestion = (req, res, next) => {
     console.log(req.params.id);
     let id = req.params.id;
@@ -474,7 +556,7 @@ module.exports.deleteQuestion = (req, res, next) => {
     
 }
 
-//this may need to be a form
+//to edit questions - use form
 module.exports.editQuestion = (req, res, next) => {
     console.log(req.params.id);
     let id = req.params.id;

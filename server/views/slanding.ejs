@@ -6,7 +6,7 @@
         <div class='jumbotron'>
             <h1 class="display-4"> <%= title %>: <%= locSurv.Name %> </h1>
         </div>
-        <form>
+        <form  method="POST">
             <% for (let count = 0; count < locSurv.quearray.length; count++) { %>
                 <div class=question>
                 <table style="text-align:center; margin:15px">
@@ -23,14 +23,14 @@
                             placeholder="Enter Respose"
                             name="question" required>
                         </td>
-                    </tr>
-                    
-
-                    
+                    </tr> 
                 </table>
                 <hr>
             </div>
             <% } %>
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-edit"></i> submit</button>
+            
         </form>
             
         </div>
