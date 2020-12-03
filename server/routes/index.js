@@ -30,10 +30,18 @@ router.get('/ylist', indexController.displayYlist);
 
 router.get('/edit/:id', indexController.displayEditPage);
 
-//new for edit
+//router.post('/edit/:id', indexController.editQuestion);
+
+//new for edit.ejs
 router.get('/deleteQuestion/:id', indexController.deleteQuestion);
 
-router.get('/editQuestion/:id', indexController.editQuestion);
+//router.get('/editQuestion/:id', indexController.editQuestion);
+
+//router.post('/editQuestion/:id', indexController.editQuestion);
+
+router.get('/alterStatement/:id', indexController.displayEditQuestionEntry);
+
+router.post('/alterStatement/:id', indexController.processNewStatement);
 
 ///end of this branch
 router.get('/leshawnsPart', indexController.displayLeshawn);

@@ -224,3 +224,44 @@ http://localhost:3000/delete/5fc7bff7dddd3f4824b1b15a
 http://localhost:3000/delete/5fc16ddb63f08137183d13b1
 http://localhost:3000/results1/5fc16ddb63f08137183d13b1
 http://localhost:3000/results1/5fc7bff7dddd3f4824b1b15a
+http://localhost:3000/deleteQuestion/5fc080c1cbd2c800173573c1
+http://localhost:3000/delete/5fc16cba7b280233c0ed16c9
+http://localhost:3000/editQuestion/5fc7f1f2811e87183487ec3c-0
+
+<% for(let i = 0; i < RespList.length; i++) { %><!--however many questions-->
+              <% for(let j = 0; j < RespList[j].length; j++) { %>
+                <%= RespList[j] %><br>
+              <% } %>
+            <% } %>
+
+
+-from html
+/edit/<%= surveys[count]._id %>
+
+ <button class="btn btn-primary" type="submit">
+
+
+<a href="/editQuestion/<%= locSurv._id %>-<%= count %>" class="btn btn-primary btn-sm" type="submit"></a>
+                          <i class="fas fa-pencil-alt"></i> Edit</a>   
+
+
+
+<a href="/editQuestion/<%= locSurv._id %>-<%= count %>" class="btn btn-primary btn-sm" type="submit"></a>
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+ <a href="/editQuestion/<%= locSurv._id %>-<%= count %>" class="btn btn-primary btn-sm" type="submit"></a>
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+
+console.log(locSurv.quearray[indexNum]);
+            
+            let questID = locSurv.quearray[indexNum]._id;
+            console.log('question ID: ' + questID);
+            /*get the question id
+            NestQuest.findById(questID, function(err, locQuest) {
+                if(err){
+                    res.render(err);
+                } else {
+                    console.log('local Question: ' + locQuest);
+                    res.render('edit', { title: 'Edit Question', locSurv: locSurv });
+                }
+            });*/
+

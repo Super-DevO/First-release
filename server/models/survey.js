@@ -22,3 +22,4 @@ let surveyModel = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Survey', surveyModel);
+module.exports.surveyQuestionModel = mongoose.model('question', surveyQuestionModel);

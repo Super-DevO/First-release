@@ -6,11 +6,13 @@ let passport = require('passport');
 let url = require('url');
 
 let Survey = require('../models/survey');
+let NestQuest = Survey.surveyQuestionModel;
 let Question = require('../models/child');
 let Resp = require('../models/responses');
 let StateResp = require('../models/StateResponse');
 let StateChildResp = require('../models/stateChild');
 let userModel = require('../models/users');
+const { RSA_NO_PADDING } = require('constants');
 //const { Alert } = require('bootstrap');
 let User = userModel.User;
 //let local = mongoose.model('local', surveyModel);
@@ -70,7 +72,7 @@ module.exports.displayEditPage = (req, res, next) => {
         if(err){
             res.render(err);
         } else {
-            res.render('edit', { title: 'Edit Your Survey', survey: currentSurvey });
+            res.render('edit', { title: 'Edit Your Survey', locSurv: currentSurvey });
         }
     })
 }
@@ -547,7 +549,7 @@ module.exports.displayResults1 = (req, res, next) => {
 }
 
 
-//removes an individual quesiton from a survey
+//removes an individual quesiton from a survey - not working
 module.exports.deleteQuestion = (req, res, next) => {
     console.log(req.params.id);
     let id = req.params.id;
@@ -561,35 +563,152 @@ module.exports.deleteQuestion = (req, res, next) => {
         } else {
             console.log(locSurv);
             //locSurv.quearray[indexNum].question = "Next Question";
-            res.render('edit', { title: 'Edit Your Survey', survey: locSurv });
+            res.render('edit', { title: 'Edit Your Survey', locSurv: locSurv });
         }
     });
     
 }
 
-//to edit questions - use form
+//to edit questions - We dont need this one
 module.exports.editQuestion = (req, res, next) => {
-    console.log(req.params.id);
+    //console.log(req.params.id);
+    //console.log(req.body);
     let id = req.params.id;
-    //let param = "fuck you you fucking fuck";
+
     let index = id.split("-", 2);
     let indexNum = index[1];
-    console.log(index[0]);
+    let updatedQuestion = new Question({
+        'question': req.body.username
+    });
+    console.log('id of survey: ' + index[0]);
+    console.log('position of Question in array: ' + index[1]);
     Survey.findById(index[0], function (err, locSurv) {
         if(err){
             res.render(err);
         } else {
-            console.log(locSurv);
-            locSurv.quearray[indexNum].question = "Next Question";
-            res.render('edit', { title: 'Edit Your Survey', survey: locSurv });
+            
+            console.log(locSurv.quearray[index[1]]);
+            //console.log(locSurv.quearray[indexNum].id);
+           /* Question.updateOne({_id: locSurv.quearry[indexNum]._id}, updatedQuestion, (err) => {
+                if(err)
+                {
+                    return console.error(err);
+                }
+                else
+                {
+                    console.log('worked');
+                }
+            });*/
+            res.render('alterStatement', { title: 'Edit Your Survey', locSurv: locSurv.quearray[index[1]] });
         }
     });
     //res.render('edit', { title: 'Edit Your Survey', survey: index[0] });
 
 }
 
-module.exports.performDelete = (req, res, next) => {
+module.exports.displayEditQuestionEntry = (req, res, next) => {
+
     let id = req.params.id;
+
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    let updatedQuestion = new Question({
+        'question': req.body.username
+    });
+    console.log('id of survey: ' + index[0]);
+    console.log('position of Question in array: ' + index[1]);
+    Survey.findById(index[0], function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            
+            console.log(locSurv.quearray[index[1]]);
+            //console.log(locSurv.quearray[indexNum].id);
+           /* Question.updateOne({_id: locSurv.quearry[indexNum]._id}, updatedQuestion, (err) => {
+                if(err)
+                {
+                    return console.error(err);
+                }
+                else
+                {
+                    console.log(rs'worked');
+                }
+            });*/
+            res.render('alterStatement', { title: 'Edit Your Survey', locSurv: locSurv.quearray[index[1]] });
+        }
+    });
+}
+
+module.exports.processNewStatement = (req, res, next) => {
+    console.log(req.body);
+    let id = req.params.id;
+    console.log("processign survey quesiton");
+    let tempQarray = [NestQuest];//not rendered
+    let newQarray = [NestQuest];//will pass to db
+    let newQuest = new NestQuest({
+        "question": req.body.NewQuest
+    });
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    let surveyID = index[0];
+    
+    console.log('survey ID: ' + surveyID);
+    Survey.findById(surveyID, function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            let questID = locSurv.quearray[indexNum]._id;
+            console.log(questID);
+            console.log();
+            tempQarray = locSurv.quearray;
+
+            for(let i = 0; i < tempQarray.length; i++) 
+            {
+                console.log(tempQarray[i]._id);
+                console.log(questID);
+                if(tempQarray[i]._id != questID)
+                {
+                    newQarray.push(tempQarray[i]);
+                } else {
+                    console.log(newQuest);
+                    newQarray.push(newQuest);
+                }
+            }
+            console.log('\n' + newQarray);
+            //now we have the updated array so call update
+            let newSurvey = new Survey({
+                "_id": surveyID,
+                "Name": locSurv.Name,
+                "Author": locSurv.Author,
+                "Description": locSurv.Description
+                //"quearray": newQarray
+            });
+            for(let j = 0; j < newQarray.length; j++)
+            {
+                newSurvey.quearray.push(newQarray[j]);
+            }
+            Survey.updateOne({_id: surveyID}, newSurvey, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                }
+                else
+                {
+                    // refresh the book list
+                    res.redirect('/edit/' + surveyID);
+                }
+            });
+
+            //res.render('edit', { title: 'Edit Question', locSurv: locSurv });
+        }
+    });
+}
+
+
+//Logged in - deletes a survey
+module.exports.performDelete = (req, res, next) => {
+    let id = req.params._id;
     Survey.remove({_id: id}, (err) => {
         if(err)
         {
@@ -598,8 +717,8 @@ module.exports.performDelete = (req, res, next) => {
         }
         else
         {
-             // refresh the book list
-             res.redirect('/list');
+             // refresh the user's list
+             res.redirect('/ylist');
         }
     });
 }
