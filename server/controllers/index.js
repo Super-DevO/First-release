@@ -2,8 +2,12 @@ const { Console } = require('console');
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
+let AutoIncrement = require('mongoose-sequence')(mongoose);
 let passport = require('passport');
 let url = require('url');
+
+let testSeq = require('../models/testSchema');
+let test = testSeq.TestSchema;
 
 let Survey = require('../models/survey');
 let NestQuest = Survey.surveyQuestionModel;
@@ -556,17 +560,34 @@ module.exports.deleteQuestion = (req, res, next) => {
 
     let index = id.split("-", 2);
     let indexNum = index[1];
-    console.log(index[0]);
+    console.log(index[0]);//the survey ID
+
+    let questID;
     Survey.findById(index[0], function (err, locSurv) {
         if(err){
             res.render(err);
         } else {
-            console.log(locSurv);
+            console.log(locSurv.quearray);
+            questID = locSurv.quearry[indexNum]._id;
+            console.log("the one to delete: " + questID);
             //locSurv.quearray[indexNum].question = "Next Question";
             res.render('edit', { title: 'Edit Your Survey', locSurv: locSurv });
         }
     });
     
+   /* NestQuest.deleteOne({_id: locSurv.quearray[indexNum].id}, (err) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            // refresh the book list
+            res.redirect('/edit' + locSurv._id);
+        }
+
+    });*/
 }
 
 //to edit questions - We dont need this one
@@ -727,4 +748,25 @@ module.exports.performLogout = (req, res, next) => {
     console.log("logging out");
     req.logout();
     res.redirect('/');
+}
+
+module.exports.testSeqtest = (req, res, next) => {
+
+        let t = new test ({
+            'name': "test is working"
+        });
+        test.create(t, (err, Survey) => {
+            if(err)
+            {
+                console.log(err);
+                res.end(err);
+            }
+            else
+            {
+                // refresh the network list
+                res.redirect('/');
+            }
+    
+        });
+    
 }

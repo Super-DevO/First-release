@@ -70,7 +70,7 @@ router.get('/delete/:_id', indexController.performDelete);
 
 router.get('/results1/:id', indexController.displayResults1);
 
-
+router.get('/arbitrayRoute', indexController.testSeqtest);
 
 //requires auth
 //this is how we add questions

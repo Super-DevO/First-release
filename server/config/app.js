@@ -12,6 +12,7 @@ let session = require('express-session');
 // database setup
 let mongoose = require('mongoose');
 let DB = require('./db');
+let AutoIncrement = require('mongoose-sequence')(mongoose);
 
 // point mongoose to the DB URI
 mongoose.connect(DB.URI, {useNewUrlParser: true, useUnifiedTopology: true});
