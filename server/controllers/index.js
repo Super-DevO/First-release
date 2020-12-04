@@ -76,7 +76,23 @@ module.exports.displayEditPage = (req, res, next) => {
         if(err){
             res.render(err);
         } else {
-            res.render('edit', { title: 'Edit Your Survey', locSurv: currentSurvey });
+            console.log(currentSurvey.Type);
+            if(currentSurvey.Type == 1)
+            {
+                res.render('edit', { title: 'Edit Your Survey', locSurv: currentSurvey });
+            } 
+            else if(currentSurvey.Type == 2)
+            {
+                res.render('edit2', { title: 'Edit Your Survey', locSurv: currentSurvey });
+            } 
+            else if(currentSurvey.Type == 3) 
+            {
+                res.render('edit3', { title: 'Edit Your Survey', locSurv: currentSurvey });
+            }
+            else
+            {
+                return console.error(err);
+            }
         }
     })
 }
@@ -247,6 +263,7 @@ module.exports.displayListSurvey = (req, res, next) => {
     //res.render('list', { title: 'List of Surveys' });
 }
 
+//not used
 module.exports.deleteSurvey = (req, res, next) => {
     let id = req.body.id;
     Survey.remove({_id: id}, (err) => {
@@ -376,7 +393,7 @@ module.exports.processQuestionAdd2 = (req, res, next) => {
                 {
                     console.log("question added");
                     res.redirect(url.format({
-                        'pathname': '/survey_question/' + name
+                        'pathname': '/survey_question2/' + name
                     }));
                 }
             }); 
@@ -439,6 +456,22 @@ module.exports.processNewSurvey = (req, res, next) => {
         "Type": req.body.surveyType
        // "quearray": null
     });
+    Survey.find((err, surveyList) => {
+        if(err)
+        {
+            return console.error(err);
+        }
+        else
+        {
+            for(let i = 0; i < surveyList.length; i++)
+            {
+                if(surveyList[i].Name == req.body.Name)
+                {
+                    res.render('/loggedInHome', { title: 'Your are now Logged In'});
+                }
+            }
+        }
+    });
     //TODO: verify that the name is not in use already
     //TODO: differentiate that the correct user can only see their surveys
     let que = req.query;
@@ -477,37 +510,44 @@ module.exports.processNewSurvey = (req, res, next) => {
 
 //will list the surveys of individual users
 module.exports.displayYlist = (req, res, next) => {
-    //console.log(req.user);
+    console.log(req.user);
+    
     let list_to_go = [Survey];
     let j = 1;
     //build an array of Surveys and pass it to the file
-    Survey.find( (err, surveys) => {
-        if (err) {
-          return console.error(err);
-        }
-        else {
-            for(i = 0; i < surveys.length; i++)
-            {
-                
-                if(surveys[i].Author === req.user.username)
+    try
+    {
+        Survey.find( (err, surveys) => {
+            if (err) {
+              return console.error(err);
+            }
+            else {
+                for(i = 0; i < surveys.length; i++)
                 {
-                    console.log(surveys[i].Name + " added");
-                    list_to_go.push(surveys[i]);
                     
+                    if(surveys[i].Author === req.user.username)
+                    {
+                        console.log(surveys[i].Name + " added");
+                        list_to_go.push(surveys[i]);
+                        
+                    }
                 }
+                console.log(list_to_go);
+                for(m = 1; m < list_to_go.length; m++)
+                {
+                    console.log(m);
+                    console.log(list_to_go[m].Name);
+                }
+              res.render('ylist', {
+                title: 'Your Surveys',
+                surveys: list_to_go
+              });
             }
-            console.log(list_to_go);
-            for(m = 1; m < list_to_go.length; m++)
-            {
-                console.log(m);
-                console.log(list_to_go[m].Name);
-            }
-          res.render('ylist', {
-            title: 'Your Surveys',
-            surveys: list_to_go
           });
-        }
-      });
+    } catch {
+        res.render('/index', { title: "Home Page"});
+    }
+    
 }
 
 //lists the results of a survey
@@ -516,78 +556,123 @@ module.exports.displayResults1 = (req, res, next) => {
     
     let sid = req.params.id;
     console.log('survey ID: ' + sid);
-    Survey.findById(sid, function (err, locSurv) {
-        if(err)
-        {
-            return console.error(err);
-        }
-        else
-        {
-            let respArray = [[StateResp]];
-            //get the answers and compare ids
-            let surveyName = locSurv.Name;
-            Resp.find((err, surveyList) => {
-                if(err)
-                {
-                    return console.error(err);
-                }
-                else
-                {
-                    for(let i = 0; i < surveyList.length; i++)
+    try{
+        Survey.findById(sid, function (err, locSurv) {
+            if(err)
+            {
+                return console.error(err);
+            }
+            else
+            {
+                console.log(locSurv);
+                let respArray = [[StateResp]];
+                //get the answers and compare ids
+                let surveyName = locSurv.Name;
+                console.log('survey to check ' + surveyName);
+                //find all surveys
+                Resp.find((err, surveyList) => {
+                    if(err)
                     {
-                        //console.log(surveyList[i].Name);
-                        //console.log(surveyList[i].resparray);
-                        if(surveyList[i].Name === surveyName){
-                            respArray.push(surveyList[i].resparray);
-                        }
+                        return console.error(err);
                     }
-                    console.log(respArray);
-                    res.render('results1', { title: 'Results', RespList: respArray, survey: locSurv });
-                }
-            });
-        }
-    }) 
-    
+                    else
+                    {
+                        //console.log('found ' + surveyList.length + ' with the name ');
+                        if(surveyList.length == 0)
+                        {
+                            res.redirect('ylist', { title: "Your Surveys"});
+                        }
+                        for(let i = 0; i < surveyList.length; i++)
+                        {
+                            //console.log(surveyList[i].Name);
+                            console.log(surveyList[i].resparray);
+                            if(surveyList[i].Name == surveyName){
+                                //do we dont need an array because its a double array
+                                respArray.push(surveyList[i].resparray);
+                            }
+                        }
+                        //console.log('found ' + respArray.length);
+                        //console.log('its ' + respArray[0]);
+                        if(respArray.length == 1)
+                        {
+                            res.render('login', {title: 'Login'});
+                        }
+                        res.render('results1', { title: 'Results', RespList: respArray, survey: locSurv });
+                    }
+                });
+            }
+        })     
+    } catch {
+        res.render('/ylist', { title: 'Your Surveys'});
+    }
+   
    // res.render('results1', { title: 'Results', RespList: respArray });
 
 }
-
 
 //removes an individual quesiton from a survey - not working
 module.exports.deleteQuestion = (req, res, next) => {
     console.log(req.params.id);
     let id = req.params.id;
+    let questID;
 
     let index = id.split("-", 2);
     let indexNum = index[1];
     console.log(index[0]);//the survey ID
-
-    let questID;
+    let newQuest = new Question;
+    let newSurvey = new Survey({
+        
+    }); 
     Survey.findById(index[0], function (err, locSurv) {
         if(err){
             res.render(err);
         } else {
-            console.log(locSurv.quearray);
-            questID = locSurv.quearry[indexNum]._id;
-            console.log("the one to delete: " + questID);
-            //locSurv.quearray[indexNum].question = "Next Question";
-            res.render('edit', { title: 'Edit Your Survey', locSurv: locSurv });
+            let surveyID = locSurv._id;
+            //console.log(locSurv.quearray);
+            questID = locSurv.quearray[indexNum]._id;
+            //console.log("the one to delete: " + questID);
+            newSurvey._id = locSurv._id;
+            newSurvey.Name = locSurv.Name;
+            newSurvey.Author = locSurv.Author;
+            newSurvey.Type = locSurv.Type;
+            newSurvey.Description = locSurv.Description;
+
+            for(let i = 0; i < locSurv.quearray.length; i++){
+                if(locSurv.quearray[i].question != null){
+                    newQuestion = locSurv.quearray[i];
+                    newSurvey.quearray.push(newQuestion);
+                }
+            }
+            Survey.deleteOne({_id: surveyID}, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                }
+                else
+                {
+                    console.log(locSurv.quearray);
+                    // now create new survey
+                    Survey.create(newSurvey, (err, Survey) => {
+                        if(err)
+                        {
+                            console.log(err);
+                            res.end(err);
+                        }
+                        else
+                        {
+                            // refresh the network list
+                            res.redirect('/ylist');
+                        }
+
+                    });
+                    //res.redirect('/edit/' + locSurv._id);
+                }
+        
+            });
         }
     });
-    
-   /* NestQuest.deleteOne({_id: locSurv.quearray[indexNum].id}, (err) => {
-        if(err)
-        {
-            console.log(err);
-            res.end(err);
-        }
-        else
-        {
-            // refresh the book list
-            res.redirect('/edit' + locSurv._id);
-        }
 
-    });*/
 }
 
 //to edit questions - We dont need this one
@@ -660,10 +745,35 @@ module.exports.displayEditQuestionEntry = (req, res, next) => {
     });
 }
 
+module.exports.displayEditListMC = (req, res, next) => {
+
+}
+
+module.exports.displayAlterMC = (req, res, next) => {
+    let id = req.params.id;
+
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    let updatedQuestion = new Question({
+        'question': req.body.username
+    });
+    console.log('id of survey: ' + index[0]);
+    console.log('position of Question in array: ' + index[1]);
+    Survey.findById(index[0], function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            
+            console.log(locSurv.quearray[index[1]]);
+            res.render('alterMC', { title: 'Edit Your Question', locSurv: locSurv.quearray[index[1]] });
+        }
+    });
+}
+
 module.exports.processNewStatement = (req, res, next) => {
     console.log(req.body);
     let id = req.params.id;
-    console.log("processign survey quesiton");
+    console.log("processing survey quesiton");
     let tempQarray = [NestQuest];//not rendered
     let newQarray = [NestQuest];//will pass to db
     let newQuest = new NestQuest({
@@ -691,6 +801,7 @@ module.exports.processNewStatement = (req, res, next) => {
                 {
                     newQarray.push(tempQarray[i]);
                 } else {
+                    newQuest._id = tempQarray[i].id;
                     console.log(newQuest);
                     newQarray.push(newQuest);
                 }
@@ -716,16 +827,80 @@ module.exports.processNewStatement = (req, res, next) => {
                 }
                 else
                 {
-                    // refresh the book list
                     res.redirect('/edit/' + surveyID);
                 }
             });
-
-            //res.render('edit', { title: 'Edit Question', locSurv: locSurv });
         }
     });
 }
 
+module.exports.processAlterMC = (req, res, next) => {
+    console.log(req.body);
+    let id = req.params.id;
+    console.log("processing survey question");
+    let tempQarray = [NestQuest];//not rendered
+    let newQarray = [NestQuest];//will pass to db
+    let newQuest = new NestQuest({
+        "question": req.body.NewQuest,
+        "optA": req.body.optA,
+        "optB": req.body.optB,
+        "optC": req.body.optC,
+        "optD": req.body.optD
+    });
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    let surveyID = index[0];
+
+    Survey.findById(surveyID, function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } 
+        else 
+        {
+            let questID = locSurv.quearray[indexNum]._id;
+            tempQarray = locSurv.quearray;
+            //adds the questions and subs in the new one
+            for(let i = 0; i < tempQarray.length; i++) 
+            {
+                console.log(tempQarray[i]._id);
+                console.log(questID);
+                if(tempQarray[i]._id != questID)
+                {
+                    newQarray.push(tempQarray[i]);
+                } else {
+                    newQuest._id = tempQarray[i].id;
+                    console.log(newQuest);
+                    newQarray.push(newQuest);
+                }
+            }
+            //creates a new survey
+            let newSurvey = new Survey({
+                "_id": surveyID,
+                "Name": locSurv.Name,
+                "Author": locSurv.Author,
+                "Description": locSurv.Description
+                //"quearray": newQarray
+            });
+            //pushes all entries from new array to question
+            for(let j = 0; j < newQarray.length; j++)
+            {
+                newSurvey.quearray.push(newQarray[j]);
+            }
+            //updates the question
+            Survey.updateOne({_id: surveyID}, newSurvey, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                }
+                else
+                {
+                    res.redirect('/edit/' + surveyID);
+                }
+            });
+        }
+});
+}
 
 //Logged in - deletes a survey
 module.exports.performDelete = (req, res, next) => {
@@ -752,21 +927,21 @@ module.exports.performLogout = (req, res, next) => {
 
 module.exports.testSeqtest = (req, res, next) => {
 
-        let t = new test ({
-            'name': "test is working"
-        });
-        test.create(t, (err, Survey) => {
-            if(err)
-            {
-                console.log(err);
-                res.end(err);
-            }
-            else
-            {
-                // refresh the network list
-                res.redirect('/');
-            }
-    
-        });
-    
+    let t = new test ({
+        'name': "test is working"
+    });
+    test.create(t, (err, Survey) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            // refresh the network list
+            res.redirect('/');
+        }
+
+    });
 }
+

@@ -22,11 +22,25 @@
               <div class="mb-1 text-muted">Nov 12</div>
               <p class="card-text mb-auto"><%= surveys[count].Description %></p>
               
-              <div class="btn-group" style="width:50%">
-                <a  href="/results1/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Results</a>
-                <a  href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
-                <a  href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
-
+              <% if(surveys[count].Type == 1) { %>
+                <div class="btn-group" style="width:50%">
+                  <a  href="/results1/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Results</a>
+                  <a  href="/edit/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
+                  <a  href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
+  
+              <% } else if(surveys[count].Type == 2) { %>
+                <div class="btn-group" style="width:50%">
+                  <a  href="/results2/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Results</a>
+                  <a  href="/edit2/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
+                  <a  href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
+  
+              <% } else { %>
+                <div class="btn-group" style="width:50%">
+                  <a  href="/results3/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Results</a>
+                  <a  href="/edit3/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
+                  <a  href="/delete/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
+              <% } %>
+              
                 </div>
               <% count++; %>
               <% if(surveys[count] != null) { %>

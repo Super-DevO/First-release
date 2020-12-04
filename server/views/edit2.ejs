@@ -1,0 +1,55 @@
+<%- include partials/header.ejs %>
+
+<%- include partials/editSideBar.ejs %>
+
+
+<div class="container" style="padding-left: 200px">
+    <div class="jumbotron">
+        <div class="container">
+            <h1><%= title %> </h1>
+        </div>
+      </div>
+      <div class="container">
+          <h3><%= locSurv.Name %></h3>
+          <a href="/survey_question2/<%= locSurv.Name %>" class="btn btn-primary" role="button">
+            <i class="fas fa-plus-circle"></i> Add a Question</a>
+
+          <hr>
+          <div class="row" sytle="display:flex; flex-wrap: wrap; margin-right: 5; margin-left:15px;">
+           
+              <table>
+                <thead>
+                    <tr>
+                      <th class=" col-md-8">Question</th>
+                      <th class=" col-md-2">Options</th>
+                    </tr>
+                </thead> 
+                   
+                    <% for (let count = 0; count < locSurv.quearray.length; count++) { %>
+                      <form class="form" method="POST">
+                    <tr>
+                        <td class="col-md-6"><%= locSurv.quearray[count].question %><br>
+                          <ol type="a">
+                            <li><%= locSurv.quearray[count].optA %></li>
+                            <li><%= locSurv.quearray[count].optB %></li>
+                            <li><%= locSurv.quearray[count].optB %></li>
+                            <li><%= locSurv.quearray[count].optD %></li>
+                          </ol> 
+                        </td>
+                        <td class="text-center col-md-2">
+                            <a href="/alterMC/<%= locSurv._id %>-<%= count %>" class="btn btn-primary btn-sm" type="submit">
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+                        </td>
+                        <td class="text-center col-md-2">
+                            <a href="/deleteQuestion/<%= locSurv._id %>-<%= count %>" class="btn btn-danger btn-sm" >
+                                <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                    </tr>
+                  </form>
+                    <% } %>
+            </table>
+        
+            
+          </div>
+        </div>
+</div>

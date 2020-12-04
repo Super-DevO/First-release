@@ -12,6 +12,7 @@ let session = require('express-session');
 // database setup
 let mongoose = require('mongoose');
 let DB = require('./db');
+//mongoose.set('useFindAndModify', false);
 let AutoIncrement = require('mongoose-sequence')(mongoose);
 
 // point mongoose to the DB URI

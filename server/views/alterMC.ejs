@@ -1,0 +1,71 @@
+<%- include partials/header.ejs %>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1><%= title %></h1>
+        <h3>Hi, you have chosen to alter a question.  Fill in the box, press the button and thy will be done.</h3>
+    </div>
+
+    <br><hr>
+    <h2><%= locSurv.question %></h2>
+    <hr>
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+          <form class="form" method="POST">
+          <div class="input-group mb-3">
+            <div class="form-group">
+                <label for="nameTextField">Please Print Clearly</label>
+                <input type="text" class="form-control"
+                id="nameTextField"
+                placeholder="Enter New Question"
+                name="NewQuest" required>
+            </div><br>
+
+            <div class="form-group">
+                <label for="optATextField">Enter Response 1</label>
+                <input type="text" class="form-control"
+                id="optATextField"
+                placeholder="Option 1"
+                name="optA" required>
+            </div>
+
+            <div class="form-group">
+                <label for="optBTextField">Enter Response 2</label>
+                <input type="text" class="form-control"
+                id="optBTextField"
+                placeholder="Option 2"
+                name="optB" required>
+            </div>
+
+            <div class="form-group">
+              <label for="optCTextField">Enter Response 3</label>
+              <input type="text" class="form-control"
+              id="optCTextField"
+              placeholder="Option 3"
+              name="optC" required>
+          </div>
+
+          <div class="form-group">
+            <label for="optDTextField">Enter Response 4</label>
+            <input type="text" class="form-control"
+            id="optDTextField"
+            placeholder="Option 4"
+            name="optD" required>
+        </div>
+
+
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-edit"></i> Alter</button>
+            
+                <a href="/edit/<%= locSurv._id %>" class="btn btn-warning">
+                    <i class="fas fa-undo"></i> Back</a>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>  
+    
+    <%- include partials/bottom_nav.ejs %>  
+    
+    <%- include partials/createFooter.ejs %>

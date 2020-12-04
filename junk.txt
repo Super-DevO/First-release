@@ -265,3 +265,104 @@ console.log(locSurv.quearray[indexNum]);
                 }
             });*/
 
+module.exports.deleteQuestion = (req, res, next) => {
+    console.log(req.params.id);
+    let id = req.params.id;
+
+    let index = id.split("-", 2);
+    let indexNum = index[1];
+    console.log(index[0]);//the survey ID
+
+    let questID;
+    Survey.findById(index[0], function (err, locSurv) {
+        if(err){
+            res.render(err);
+        } else {
+            //first call survey.update then in that we call deleteOne
+            console.log(locSurv.quearray);
+            questID = locSurv.quearry[indexNum]._id;
+            console.log("the one to delete: " + questID);
+            NestQuest.deleteOne({_id: locSurv.quearray[indexNum].id}, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                }
+                else
+                {
+                    // call the updateOne function
+                    Survey.findById(index[0], function (err, locSurv) {
+                        if(err){
+                            res.render(err);
+                        } else {
+                            console.log(locSurv);
+
+                        }
+                });
+            //locSurv.quearray[indexNum].question = "Next Question";
+            res.render('edit', { title: 'Edit Your Survey', locSurv: locSurv });
+        }
+    });
+
+ Survey.updateOne({_id: surveyID}, locSurv, (err) => {
+                        if(err)
+                        {
+                            console.log(err);
+                            res.end(err);
+                        }
+                        else
+                        {
+                            //cannot set headers 
+                            res.redirect('/edit/' + surveyID);
+                        }
+                    });*/
+
+   /*does not work 
+   NestQuest.deleteOne({_id: locSurv.quearray[indexNum].id}, (err) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            // refresh the book list
+            res.redirect('/edit' + locSurv._id);
+        }
+
+    });*/
+
+
+}   
+
+/*let mongoose = require('mongoose');
+//const AutoIncrement = require('mongoose-sequence')(mongoose);
+
+let TestSchema = mongoose.Schema({
+    _id: Number,
+    name: String
+}
+//,{_id: false }
+);
+ 
+//TestSchema.plugin(AutoIncrement);
+module.exports.mongoose.model('test', TestSchema);*/
+
+http://localhost:3000/survey_question/MC%20Surevey
+http://localhost:3000/edit/202
+http://localhost:3000/edit2/202
+http://localhost:3000/edit2/202
+
+ //console.log(locSurv.quearray[indexNum].id);
+           /* Question.updateOne({_id: locSurv.quearry[indexNum]._id}, updatedQuestion, (err) => {
+                if(err)
+                {
+                    return console.error(err);
+                }
+                else
+                {
+                    console.log(rs'worked');
+                }
+            });*/
+
+
