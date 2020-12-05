@@ -9,6 +9,9 @@ let url = require('url');
 let testSeq = require('../models/testSchema');
 let test = testSeq.TestSchema;
 
+let respModel = require('../models/response2');
+let Resp2 = require('../models/child2');
+
 let Survey = require('../models/survey');
 let NestQuest = Survey.surveyQuestionModel;
 let Question = require('../models/child');
@@ -169,8 +172,18 @@ module.exports.displaySLanding = (req, res, next) => {
         } else {
             console.log(locSurv);
             //res.render('slanding', { title: 'Your Survey', survey: req.params._id });
-
-            res.render('slanding', { title: 'TakeSurvey', locSurv: locSurv });
+            if(locSurv.Type == 1)
+            {
+                res.render('slanding', { title: 'Take Survey', locSurv: locSurv });
+            }
+            else if(locSurv.Type == 2) 
+            {
+                res.render('slanding2', { title: 'Take Survey' , locSurv: locSurv });
+            }
+            else if(locSurv.Type == 3) 
+            {
+                //res.render(slanding3', { title: 'Take Survey', locSurv: locSurv });
+            } else {}
         }
     });
 }
@@ -208,8 +221,6 @@ module.exports.processSurveyQuestion = (req, res, next) => {
                 'sid': surveyID,
                 'Name': locSurv.Name,
                 'Author': locSurv.Author,
-                'SomeShit': 'ehlloe',
-                'con': "didie",
                 'resparray': respArray
             });
             for(let i = 0; i < locSurv.quearray.length; i++)
@@ -227,10 +238,56 @@ module.exports.processSurveyQuestion = (req, res, next) => {
                 } else 
                 {
                     console.log('response added');
-                    res.redirect('/thanks');
+                    res.redirect('thanks');
                 }
             });
         } 
+    });
+}
+
+module.exports.processSurvey2Question = (req, res, next) => {
+    let surveyID = req.params.id;
+    let newRespChild = new Resp2;
+    let respArray = [Resp2];
+    console.log(req.body);
+//find the survey that we are associating the ans to
+    Survey.findById(surveyID, function (err, locSurv) {
+        if(err)
+        {
+            res.render(err);
+        } 
+        else 
+        {
+            newAnswer = new respModel({
+                'sid': locSurv._id,
+                'Name': locSurv.Name,
+                'Author': locSurv.Author,
+                'resparray': respArray
+            });
+//loop through the original questions and create a child 
+            console.log(locSurv.quearray.length);
+            for(let i = 0; i < locSurv.quearray.length; i++)
+            {
+
+                newRespChild.question = locSurv.quearray[i].question;
+                //newRespChild.qid = locSurv.quearray[i]._id.toString();
+                newRespChild.resp = req.body.dropQuestion[i].toString();
+                newAnswer.resparray.push(newRespChild);
+            }
+            console.log(newAnswer);
+            Resp.create(newAnswer, (err, Resp) => {
+                if(err)
+                {
+                    console.log(err);
+                    res.end(err);
+                } else 
+                {
+                    console.log('response added');
+                    res.redirect('/thanks');
+                }
+            });
+            //res.render('thanks', { title: 'thanks'});
+        }
     });
 }
 

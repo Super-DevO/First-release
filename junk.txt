@@ -365,4 +365,8 @@ http://localhost:3000/edit2/202
                 }
             });*/
 
-
+processNewSurvey - where we get the drop down pulls from
+req.body.surveyType - is what it is called in the html
+    question: String,
+    qid: String,
+    radio: String

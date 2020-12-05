@@ -58,6 +58,10 @@ router.get('/slanding/:id', indexController.displaySLanding);
 
 router.post('/slanding/:id', indexController.processSurveyQuestion);
 
+router.get('/slanding2/:id', indexController.displaySLanding);
+
+router.post('/slanding2/:id', indexController.processSurvey2Question);
+
 router.get('/thanks', indexController.displayThanks);
 
 //bs pages

@@ -46,10 +46,20 @@
             <div class="mb-1 text-muted"><%= surveys[count].Author %></div>
             <p class="mb-auto"><%= surveys[count].Description %></p>
             <br>
-            <div class="btn-group" style="width:50%">
-              <a type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Participate</a>
-            </div>
-          </div>
+            <% if(surveys[count].Type == 1) { %>
+              <div class="btn-group" style="width:50%">
+                <a type="button" href="/slanding/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Participate</a>
+              </div>
+            <% } else if(surveys[count].Type == 2) { %>
+              <div class="btn-group" style="width:50%">
+                <a type="button" href="/slanding2/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Participate</a>
+              </div>
+              <% } else if(surveys[count].Type == 3) { %>
+                <div class="btn-group" style="width:50%">
+                  <a type="button" href="/slanding3/<%= surveys[count]._id %>" class="btn btn-sm btn-outline-secondary">Participate</a>
+                </div>
+              <% } %>
+              </div>
           <div class="col-auto d-none d-lg-block">
             <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
           </div>
