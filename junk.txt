@@ -370,3 +370,13 @@ req.body.surveyType - is what it is called in the html
     question: String,
     qid: String,
     radio: String
+
+sid: String,
+    Name: String,
+    Author: String,
+
+    resparray: [response2Model]
+question: String,
+    qid: Number,
+    radio: Number
+

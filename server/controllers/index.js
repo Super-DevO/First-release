@@ -505,13 +505,14 @@ module.exports.displayCreateSurvey = (req, res, next) => {
 
 //adds a new survey
 module.exports.processNewSurvey = (req, res, next) => {
-    //console.log(req.body.Name);
+    console.log(req.user);
     let newSurvey = Survey({
         "Name": req.body.Name,
-        "Author": req.body.Author,
+        "Author": req.user.username,
         "Description": req.body.Description,
-        "Type": req.body.surveyType
-       // "quearray": null
+        "Type": req.body.surveyType,
+        "Genera": req.body.Genera
+       //"quearray": null
     });
     Survey.find((err, surveyList) => {
         if(err)
@@ -610,7 +611,7 @@ module.exports.displayYlist = (req, res, next) => {
 //lists the results of a survey
 module.exports.displayResults1 = (req, res, next) => {
     let locSurv;
-    
+    console.log('this is the results1');
     let sid = req.params.id;
     console.log('survey ID: ' + sid);
     try{
@@ -621,7 +622,7 @@ module.exports.displayResults1 = (req, res, next) => {
             }
             else
             {
-                console.log(locSurv);
+                console.log(locSurv.Name);
                 let respArray = [[StateResp]];
                 //get the answers and compare ids
                 let surveyName = locSurv.Name;
@@ -635,9 +636,9 @@ module.exports.displayResults1 = (req, res, next) => {
                     else
                     {
                         //console.log('found ' + surveyList.length + ' with the name ');
-                        if(surveyList.length == 0)
+                        if(surveyList.length === 0)
                         {
-                            res.redirect('ylist', { title: "Your Surveys"});
+                            res.redirect('login', { title: "Login"});
                         }
                         for(let i = 0; i < surveyList.length; i++)
                         {
@@ -650,7 +651,7 @@ module.exports.displayResults1 = (req, res, next) => {
                         }
                         //console.log('found ' + respArray.length);
                         //console.log('its ' + respArray[0]);
-                        if(respArray.length == 1)
+                        if(respArray.length === 1)
                         {
                             res.render('login', {title: 'Login'});
                         }
@@ -660,6 +661,7 @@ module.exports.displayResults1 = (req, res, next) => {
             }
         })     
     } catch {
+        console.log('errors in results1');
         res.render('/ylist', { title: 'Your Surveys'});
     }
    

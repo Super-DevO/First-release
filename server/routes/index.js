@@ -81,6 +81,8 @@ router.get('/delete/:_id', requireAuth, indexController.performDelete);
 
 router.get('/results1/:id', requireAuth, indexController.displayResults1);
 
+router.get('/results2/:id', requireAuth, indexController.displayResults1);
+
 router.get('/arbitrayRoute', indexController.testSeqtest);
 
 //requires auth
